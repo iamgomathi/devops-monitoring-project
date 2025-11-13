@@ -1,0 +1,30 @@
+- name: Setup Monitoring Tools
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Install Prometheus
+      shell: |
+        wget https://github.com/prometheus/prometheus/releases/download/v2.51.0/prometheus-2.51.0.linux-amd64.tar.gz
+        tar xvf prometheus-2.51.0.linux-amd64.tar.gz
+        mv prometheus-2.51.0.linux-amd64 /usr/local/prometheus
+
+    - name: Install Grafana
+      shell: |
+        apt-get install -y adduser libfontconfig1
+        wget https://dl.grafana.com/oss/release/grafana_10.2.3_amd64.deb
+        dpkg -i grafana_10.2.3_amd64.deb
+        systemctl enable grafana-server
+        systemctl start grafana-server
+
