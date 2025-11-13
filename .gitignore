@@ -1,0 +1,13 @@
+# Terraform local files
+.terraform/
+*.tfstate
+*.tfstate.backup
+crash.log
+override.tf
+override.tf.json
+terraform.rc
+
+# Provider binaries
+*.zip
+*.tar.gz
+*.exe
